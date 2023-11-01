@@ -2,10 +2,23 @@ import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
+import HomeSlide from "@/components/home-slide"
+import Category from "@/components/home/category"
 
 export default function IndexPage() {
   return (
-    <section className="container grid items-center gap-6 pt-6 pb-8 md:py-10">
+    <section className="container items-center gap-6 pb-8 pt-6 md:py-10">
+      <div className="flex ">
+        <div className="w-1/5 rounded-lg bg-foreground text-background">
+          <Category />
+        </div>
+        <div className="flex w-4/5">
+          <div className="mx-4 w-4/5">
+            <HomeSlide />
+          </div>
+          <div className="w-1/5">d</div>
+        </div>
+      </div>
       <div className="flex max-w-[980px] flex-col items-start gap-2">
         <h1 className="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
           Beautifully designed components <br className="hidden sm:inline" />
