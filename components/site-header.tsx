@@ -8,10 +8,19 @@ import { ThemeToggle } from "@/components/theme-toggle"
 
 export function SiteHeader() {
   return (
-    <header className="bg-background sticky top-0 z-40 w-full border-b">
-      <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
-        <MainNav items={siteConfig.mainNav} />
-        <div className="flex flex-1 items-center justify-end space-x-4">
+    <header className="sticky top-0 z-40 w-full border-b bg-background">
+      <div className="navbar">
+        <div className="navbar-start">
+          <Link href="/" className="flex items-center space-x-2">
+            <Icons.logo className="h-6 w-6" />
+            <span className="inline-block font-bold">{siteConfig.name}</span>
+          </Link>
+        </div>
+        <div className="navbar-center hidden lg:flex">
+          <MainNav items={siteConfig.mainNav} />
+        </div>
+
+        <div className="navbar-end">
           <nav className="flex items-center space-x-1">
             <Link
               href={siteConfig.links.github}
@@ -43,6 +52,16 @@ export function SiteHeader() {
                 <span className="sr-only">Twitter</span>
               </div>
             </Link>
+
+            <div
+              className={buttonVariants({
+                size: "icon",
+                variant: "ghost",
+              })}
+            >
+              <Icons.search className="h-5 w-5" />
+              <span className="sr-only">Search</span>
+            </div>
             <ThemeToggle />
           </nav>
         </div>
