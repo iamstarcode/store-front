@@ -1,12 +1,9 @@
 import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
-import { Button as Btn, buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/"
 import HomeSlide from "@/components/home-slide"
 import Category from "@/components/home/category"
-import { Button } from "@/components/ui"
-
-import classes from "../styles/mantine/Button.module.css"
 
 export default function IndexPage() {
   return (
@@ -20,8 +17,8 @@ export default function IndexPage() {
             <HomeSlide />
           </div>
           <div className="w-1/5">
-            <Button>Press Me</Button>
-            <Btn>Press Me</Btn>
+            <Button>Red</Button>
+            <Button>Red</Button>
           </div>
         </div>
       </div>

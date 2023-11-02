@@ -1,7 +1,5 @@
 "use client"
 
-import { NavigationMenuDemo } from "./navigation-menu"
-
 function Category() {
   return (
     <ul className="menu">
@@ -14,8 +12,6 @@ function Category() {
       <li>
         <a>Item 3</a>
       </li>
-
-      <NavigationMenuDemo />
     </ul>
   )
 }

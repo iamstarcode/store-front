@@ -12,6 +12,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 import "@mantine/core/styles.css"
 import { ColorSchemeScript, MantineProvider } from "@mantine/core"
 
+import { theme } from "@/config/mantineTheme"
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -41,25 +43,19 @@ export default function RootLayout({ children }: RootLayoutProps) {
         suppressHydrationWarning
         className={`${GeistSans.variable} ${GeistMono.variable}`}
       >
-        <head>
-          <ColorSchemeScript />
-        </head>
-        <head />
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased",
+            "min-h-screen bg-background font-sans text-foreground antialiased",
             fontSans.variable
           )}
         >
-          <MantineProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <div className="relative flex min-h-screen flex-col">
-                <SiteHeader />
-                <div className="flex-1">{children}</div>
-              </div>
-              <TailwindIndicator />
-            </ThemeProvider>
-          </MantineProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <div className="relative flex min-h-screen flex-col">
+              <SiteHeader />
+              <div className="flex-1">{children}</div>
+            </div>
+            <TailwindIndicator />
+          </ThemeProvider>
         </body>
       </html>
     </>
