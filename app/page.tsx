@@ -1,9 +1,12 @@
 import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
-import { buttonVariants } from "@/components/ui/button"
+import { Button as Btn, buttonVariants } from "@/components/ui/button"
 import HomeSlide from "@/components/home-slide"
 import Category from "@/components/home/category"
+import { Button } from "@/components/ui"
+
+import classes from "../styles/mantine/Button.module.css"
 
 export default function IndexPage() {
   return (
@@ -16,7 +19,10 @@ export default function IndexPage() {
           <div className="mx-4 w-4/5">
             <HomeSlide />
           </div>
-          <div className="w-1/5">d</div>
+          <div className="w-1/5">
+            <Button>Press Me</Button>
+            <Btn>Press Me</Btn>
+          </div>
         </div>
       </div>
       <div className="flex max-w-[980px] flex-col items-start gap-2">
