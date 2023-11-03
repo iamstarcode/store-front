@@ -3339,7 +3339,7 @@ export type GetCollectionsRootQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCollectionsRootQuery = { __typename?: 'Query', collections: { __typename?: 'CollectionList', items: Array<{ __typename?: 'Collection', id: string, name: string, slug: string }> } };
 
-export type ProductsFragment = { __typename?: 'Product', id: string, name: string, slug: string };
+export type ProductsFragmentFragment = { __typename?: 'Product', id: string, name: string, slug: string, variants: Array<{ __typename?: 'ProductVariant', price: any }>, assets: Array<{ __typename?: 'Asset', source: string, preview: string }> };
 
 export type GetProductsFragmentQueryVariables = Exact<{
   take?: InputMaybe<Scalars['Int']['input']>;
@@ -3347,13 +3347,25 @@ export type GetProductsFragmentQueryVariables = Exact<{
 }>;
 
 
-export type GetProductsFragmentQuery = { __typename?: 'Query', products: { __typename?: 'ProductList', items: Array<{ __typename?: 'Product', id: string, name: string, slug: string }> } };
+export type GetProductsFragmentQuery = { __typename?: 'Query', products: { __typename?: 'ProductList', items: Array<{ __typename?: 'Product', id: string, name: string, slug: string, variants: Array<{ __typename?: 'ProductVariant', price: any }>, assets: Array<{ __typename?: 'Asset', source: string, preview: string }> }> } };
 
-export const ProductsFragmentDoc = gql`
-    fragment Products on Product {
+export type GetProductsNewArrivalsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetProductsNewArrivalsQuery = { __typename?: 'Query', products: { __typename?: 'ProductList', items: Array<{ __typename?: 'Product', id: string, name: string, slug: string, variants: Array<{ __typename?: 'ProductVariant', price: any }>, assets: Array<{ __typename?: 'Asset', source: string, preview: string }> }> } };
+
+export const ProductsFragmentFragmentDoc = gql`
+    fragment ProductsFragment on Product {
   id
   name
   slug
+  variants {
+    price
+  }
+  assets {
+    source
+    preview
+  }
 }
     `;
 export const GetCollectionsRootDocument = gql`
@@ -3371,11 +3383,20 @@ export const GetProductsFragmentDocument = gql`
     query GetProductsFragment($take: Int, $skip: Int) {
   products(options: {take: $take, skip: $skip}) {
     items {
-      ...Products
+      ...ProductsFragment
     }
   }
 }
-    ${ProductsFragmentDoc}`;
+    ${ProductsFragmentFragmentDoc}`;
+export const GetProductsNewArrivalsDocument = gql`
+    query GetProductsNewArrivals {
+  products(options: {sort: {createdAt: DESC}, take: 10}) {
+    items {
+      ...ProductsFragment
+    }
+  }
+}
+    ${ProductsFragmentFragmentDoc}`;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -3389,6 +3410,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetProductsFragment(variables?: GetProductsFragmentQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetProductsFragmentQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetProductsFragmentQuery>(GetProductsFragmentDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductsFragment', 'query');
+    },
+    GetProductsNewArrivals(variables?: GetProductsNewArrivalsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetProductsNewArrivalsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProductsNewArrivalsQuery>(GetProductsNewArrivalsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductsNewArrivals', 'query');
     }
   };
 }
@@ -3421,6 +3445,9 @@ export function getSdkWithHooks(client: GraphQLClient, withWrapper: SdkFunctionW
     },
     useGetProductsFragment(variables?: GetProductsFragmentQueryVariables, config?: SWRConfigInterface<GetProductsFragmentQuery, ClientError>) {
       return useSWR<GetProductsFragmentQuery, ClientError>(genKey<GetProductsFragmentQueryVariables>('GetProductsFragment', variables), () => sdk.GetProductsFragment(variables), config);
+    },
+    useGetProductsNewArrivals(variables?: GetProductsNewArrivalsQueryVariables, config?: SWRConfigInterface<GetProductsNewArrivalsQuery, ClientError>) {
+      return useSWR<GetProductsNewArrivalsQuery, ClientError>(genKey<GetProductsNewArrivalsQueryVariables>('GetProductsNewArrivals', variables), () => sdk.GetProductsNewArrivals(variables), config);
     }
   };
 }

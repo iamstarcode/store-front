@@ -10,15 +10,15 @@ export default function IndexPage() {
   return (
     <section className="container items-center gap-6 px-4 pb-8 pt-6 md:py-10">
       <div className="flex flex-wrap space-y-4 space-x-0 lg:flex-nowrap lg:space-y-0 lg:space-x-4">
-        <div className="hidden w-full rounded-lg bg-foreground text-background lg:flex">
+        <div className="hidden rounded-lg bg-foreground text-background lg:flex w-1/5">
           <Category />
         </div>
-        <div className=" flex w-full flex-wrap lg:w-3/5">
+        <div className=" flex w-full flex-wrap lg:w-1/2">
           <div className=" w-full lg:flex-1">
             <HomeSlide />
           </div>
         </div>
-        <div className="w-full lg:w-1/5">shbfvhgdfjbhvrfjhbsvhj</div>
+        <div className="w-full lg:flex-1">shbfvhgdfjbhvrfjhbsvhj</div>
       </div>
 
       {/* New Arivals */}

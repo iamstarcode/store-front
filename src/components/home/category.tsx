@@ -16,15 +16,6 @@ function Category() {
           <Link href={`category/${item.slug}`}>{item.name}</Link>
         </li>
       ))}
-      <li>
-        <a>Item 1</a>
-      </li>
-      <li>
-        <a>Item 2</a>
-      </li>
-      <li>
-        <a>Item 3</a>
-      </li>
     </ul>
   )
 }

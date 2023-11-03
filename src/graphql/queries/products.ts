@@ -1,10 +1,17 @@
 import { gql } from "graphql-request"
 
-const ProductsFagment = gql`
-  fragment Products on Product {
+const ProductsFragment = gql`
+  fragment ProductsFragment on Product {
     id
     name
     slug
+    variants {
+      price
+    }
+    assets {
+      source
+      preview
+    }
   }
 `
 
@@ -12,7 +19,17 @@ const GetProducts = gql`
   query GetProductsFragment($take: Int, $skip: Int) {
     products(options: { take: $take, skip: $skip }) {
       items {
-        ...Products
+        ...ProductsFragment
+      }
+    }
+  }
+`
+
+const GetProductsNewArrivals = gql`
+  query GetProductsNewArrivals {
+    products(options: { sort: { createdAt: DESC }, take: 10 }) {
+      items {
+        ...ProductsFragment
       }
     }
   }
