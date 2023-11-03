@@ -1,16 +1,24 @@
 "use client"
 
+import { ReactNode } from "react"
 import { SWRConfig, SWRConfiguration } from "swr"
 
-function SWR(children: React.ReactNode) {
+import { client } from "@/lib/client"
+
+function SWR({ children }: { children: ReactNode }) {
+  const fetcher = async (query: string, variables: any) => {
+    const data = await client.request(query, variables)
+    return data
+  }
   return (
     <SWRConfig
       value={{
         refreshInterval: 3000,
-        fetcher: (resource, init) =>
-          fetch(resource, init).then((res) => res.json()),
+        fetcher,
       }}
-    ></SWRConfig>
+    >
+      {children}
+    </SWRConfig>
   )
 }
 
