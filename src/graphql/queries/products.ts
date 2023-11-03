@@ -1,6 +1,6 @@
 import { gql } from "graphql-request"
 
-export const ProductsFagment = gql`
+const ProductsFagment = gql`
   fragment Products on Product {
     id
     name
@@ -8,7 +8,7 @@ export const ProductsFagment = gql`
   }
 `
 
-export const GetProducts = gql`
+const GetProducts = gql`
   query GetProductsFragment($take: Int, $skip: Int) {
     products(options: { take: $take, skip: $skip }) {
       items {

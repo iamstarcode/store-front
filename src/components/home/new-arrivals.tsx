@@ -2,7 +2,6 @@
 
 import { client } from "@/lib/client"
 import { getSdkWithHooks } from "@/hooks/use-query"
-import { GetProducts } from "@/hooks/useProducts"
 
 function NewArrivals() {
   const sdk = getSdkWithHooks(client())

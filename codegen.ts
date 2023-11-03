@@ -5,7 +5,7 @@ const config: CodegenConfig = {
   generates: {
     "./src/hooks/use-query.ts": {
       schema: "http://localhost:3000/shop-api",
-      documents: "src/**/*.{tsx,ts}",
+      documents: "src/graphql/**/*.{tsx,ts}",
       plugins: [
         "typescript",
         "typescript-operations",

@@ -3334,6 +3334,11 @@ export type Zone = Node & {
   updatedAt: Scalars['DateTime']['output'];
 };
 
+export type GetCollectionsRootQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCollectionsRootQuery = { __typename?: 'Query', collections: { __typename?: 'CollectionList', items: Array<{ __typename?: 'Collection', id: string, name: string, slug: string }> } };
+
 export type ProductsFragment = { __typename?: 'Product', id: string, name: string, slug: string };
 
 export type GetProductsFragmentQueryVariables = Exact<{
@@ -3349,6 +3354,17 @@ export const ProductsFragmentDoc = gql`
   id
   name
   slug
+}
+    `;
+export const GetCollectionsRootDocument = gql`
+    query GetCollectionsRoot {
+  collections {
+    items {
+      id
+      name
+      slug
+    }
+  }
 }
     `;
 export const GetProductsFragmentDocument = gql`
@@ -3368,6 +3384,9 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    GetCollectionsRoot(variables?: GetCollectionsRootQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetCollectionsRootQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetCollectionsRootQuery>(GetCollectionsRootDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetCollectionsRoot', 'query');
+    },
     GetProductsFragment(variables?: GetProductsFragmentQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetProductsFragmentQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetProductsFragmentQuery>(GetProductsFragmentDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductsFragment', 'query');
     }
@@ -3397,6 +3416,9 @@ export function getSdkWithHooks(client: GraphQLClient, withWrapper: SdkFunctionW
   const genKey = <V extends Record<string, unknown> = Record<string, unknown>>(name: string, object: V = {} as V): SWRKeyInterface => [name, ...Object.keys(object).sort().map(key => object[key])];
   return {
     ...sdk,
+    useGetCollectionsRoot(variables?: GetCollectionsRootQueryVariables, config?: SWRConfigInterface<GetCollectionsRootQuery, ClientError>) {
+      return useSWR<GetCollectionsRootQuery, ClientError>(genKey<GetCollectionsRootQueryVariables>('GetCollectionsRoot', variables), () => sdk.GetCollectionsRoot(variables), config);
+    },
     useGetProductsFragment(variables?: GetProductsFragmentQueryVariables, config?: SWRConfigInterface<GetProductsFragmentQuery, ClientError>) {
       return useSWR<GetProductsFragmentQuery, ClientError>(genKey<GetProductsFragmentQueryVariables>('GetProductsFragment', variables), () => sdk.GetProductsFragment(variables), config);
     }
