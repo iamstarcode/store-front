@@ -1,5 +1,9 @@
-/* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import { GraphQLClient } from 'graphql-request';
+import { GraphQLClientRequestHeaders } from 'graphql-request/build/cjs/types';
+import gql from 'graphql-tag';
+import { ClientError } from 'graphql-request/dist/types';
+import useSWR, { SWRConfiguration as SWRConfigInterface, Key as SWRKeyInterface } from 'swr';
+import useSWRInfinite, { SWRInfiniteConfiguration } from 'swr/infinite';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -14,14 +18,10 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
-  DateTime: { input: any; output: any; }
-  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-  JSON: { input: any; output: any; }
-  /** The `Money` scalar type represents monetary values and supports signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). */
+  DateTime: { input: string; output: string; }
+  JSON: { input: unknown; output: unknown; }
   Money: { input: any; output: any; }
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: { input: any; output: any; }
+  Upload: { input: unknown; output: unknown; }
 };
 
 export type ActiveOrderResult = NoActiveOrderError | Order;
@@ -3334,15 +3334,71 @@ export type Zone = Node & {
   updatedAt: Scalars['DateTime']['output'];
 };
 
-export type ProductFragment = { __typename?: 'Product', id: string, name: string, slug: string } & { ' $fragmentName'?: 'ProductFragment' };
+export type ProductsFragment = { __typename?: 'Product', id: string, name: string, slug: string };
 
-export type GetProductsQueryVariables = Exact<{
+export type GetProductsFragmentQueryVariables = Exact<{
   take?: InputMaybe<Scalars['Int']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type GetProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductList', items: Array<{ __typename?: 'Product', id: string, name: string, slug: string }> } };
+export type GetProductsFragmentQuery = { __typename?: 'Query', products: { __typename?: 'ProductList', items: Array<{ __typename?: 'Product', id: string, name: string, slug: string }> } };
 
-export const ProductFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Product"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Product"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]} as unknown as DocumentNode<ProductFragment, unknown>;
-export const GetProductsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetProducts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"take"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"products"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"options"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"take"},"value":{"kind":"Variable","name":{"kind":"Name","value":"take"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}}]}}]} as unknown as DocumentNode<GetProductsQuery, GetProductsQueryVariables>;
+export const ProductsFragmentDoc = gql`
+    fragment Products on Product {
+  id
+  name
+  slug
+}
+    `;
+export const GetProductsFragmentDocument = gql`
+    query GetProductsFragment($take: Int, $skip: Int) {
+  products(options: {take: $take, skip: $skip}) {
+    items {
+      ...Products
+    }
+  }
+}
+    ${ProductsFragmentDoc}`;
+
+export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
+
+
+const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
+
+export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+  return {
+    GetProductsFragment(variables?: GetProductsFragmentQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetProductsFragmentQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProductsFragmentQuery>(GetProductsFragmentDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductsFragment', 'query');
+    }
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;
+export type SWRInfiniteKeyLoader<Data = unknown, Variables = unknown> = (
+  index: number,
+  previousPageData: Data | null
+) => [keyof Variables, Variables[keyof Variables] | null] | null;
+export function getSdkWithHooks(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+  const sdk = getSdk(client, withWrapper);
+  const utilsForInfinite = {
+    generateGetKey: <Data = unknown, Variables = unknown>(
+      id: string,
+      getKey: SWRInfiniteKeyLoader<Data, Variables>
+    ) => (pageIndex: number, previousData: Data | null) => {
+      const key = getKey(pageIndex, previousData)
+      return key ? [id, ...key] : null
+    },
+    generateFetcher: <Query = unknown, Variables = unknown>(query: (variables: Variables) => Promise<Query>, variables?: Variables) => (
+        id: string,
+        fieldName: keyof Variables,
+        fieldValue: Variables[typeof fieldName]
+      ) => query({ ...variables, [fieldName]: fieldValue } as Variables)
+  }
+  return {
+    ...sdk,
+    useGetProductsFragment(key: SWRKeyInterface, variables?: GetProductsFragmentQueryVariables, config?: SWRConfigInterface<GetProductsFragmentQuery, ClientError>) {
+      return useSWR<GetProductsFragmentQuery, ClientError>(key, () => sdk.GetProductsFragment(variables), config);
+    }
+  };
+}
+export type SdkWithHooks = ReturnType<typeof getSdkWithHooks>;

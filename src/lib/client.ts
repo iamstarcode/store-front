@@ -1,4 +1,5 @@
 import { GraphQLClient } from "graphql-request"
+import { RequestConfig } from "graphql-request/src/types"
 
-console.log(process.env.NEXT_PUBLIC_API_URI)
-export const client = new GraphQLClient(process.env.NEXT_PUBLIC_API_URI ?? "")
+export const client = (requestConfig?: RequestConfig) =>
+  new GraphQLClient(process.env.NEXT_PUBLIC_API_URI ?? "", requestConfig)

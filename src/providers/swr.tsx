@@ -1,19 +1,17 @@
 "use client"
 
 import { ReactNode } from "react"
+import request from "graphql-request"
 import { SWRConfig, SWRConfiguration } from "swr"
 
 import { client } from "@/lib/client"
 
 function SWR({ children }: { children: ReactNode }) {
-  const fetcher = async (query: string, variables: any) => {
-    const data = await client.request(query, variables)
-    return data
-  }
+  const fetcher = ([query, variables]) => client.request(query, variables)
+
   return (
     <SWRConfig
       value={{
-        refreshInterval: 3000,
         fetcher,
       }}
     >
