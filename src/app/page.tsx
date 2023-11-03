@@ -2,15 +2,15 @@ import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
 import { Button, buttonVariants } from "@/components/ui/"
-import HomeSlide from "@/components/home-slide"
 import Category from "@/components/home/category"
+import HomeSlide from "@/components/home/home-slide"
 import NewArrivals from "@/components/home/new-arrivals"
 
 export default function IndexPage() {
   return (
     <section className="container items-center gap-6 px-4 pb-8 pt-6 md:py-10">
-      <div className="flex flex-wrap space-y-4 space-x-0 lg:flex-nowrap lg:space-y-0 lg:space-x-4">
-        <div className="hidden rounded-lg bg-foreground text-background lg:flex w-1/5">
+      <div className="flex flex-wrap space-x-0 space-y-4 lg:flex-nowrap lg:space-x-4 lg:space-y-0">
+        <div className="hidden w-1/5 rounded-lg bg-foreground text-background lg:flex">
           <Category />
         </div>
         <div className=" flex w-full flex-wrap lg:w-1/2">

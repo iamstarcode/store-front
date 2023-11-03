@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-no-undef */
+
+import Image from "next/image"
 import { formatCurrency } from "utils/currency-format"
 
-import { client } from "@/lib/client"
-import { GetProductsNewArrivalsQuery, getSdkWithHooks } from "@/hooks/use-query"
+import { GetProductsNewArrivalsQuery } from "@/hooks/use-query"
 
 import { StaticStarRating } from "./start-rating"
 
@@ -12,7 +13,10 @@ function ProductCard({
   product: GetProductsNewArrivalsQuery["products"]["items"][0]
 }) {
   return (
-    <div className="card my-2 h-96 w-60 snap-center rounded-none dark:bg-white">
+    <div
+      key={product.id}
+      className="card my-2 h-96 w-60 snap-center rounded-none dark:bg-white"
+    >
       <figure className="">
         <Image
           src={product.assets.at(0)?.preview ?? ""}
