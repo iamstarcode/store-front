@@ -32,18 +32,17 @@ function NewArrivals() {
   return (
     <>
       <Swiper
-        slidesPerView={2}
-        spaceBetween={30}
-        centeredSlides={false}
+        direction={"horizontal"}
+        slidesPerView={"auto"}
         className="mySwiper"
       >
-        {data?.products.items.map(
-          (item: GetProductsNewArrivalsQuery["products"]["items"][0]) => (
-            <SwiperSlide>
+        <SwiperSlide>
+          {data?.products.items.map(
+            (item: GetProductsNewArrivalsQuery["products"]["items"][0]) => (
               <ProductCard product={item} />
-            </SwiperSlide>
-          )
-        )}
+            )
+          )}
+        </SwiperSlide>
       </Swiper>
       <div className="">
         <h2 className="py-4 text-2xl font-bold">New Arrivals</h2>
