@@ -1,8 +1,7 @@
 "use client"
 
 import { ReactNode } from "react"
-import request from "graphql-request"
-import { SWRConfig, SWRConfiguration } from "swr"
+import { SWRConfig } from "swr"
 
 import { client } from "@/lib/client"
 

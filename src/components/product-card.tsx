@@ -15,16 +15,15 @@ function ProductCard({
   return (
     <div
       key={product.id}
-      className="card my-2 h-96 w-60 snap-center rounded-none dark:bg-white"
+      className="card my-2 h-96 snap-center items-center rounded-none dark:bg-white"
     >
-      <figure className="">
-        <Image
-          src={product.assets.at(0)?.preview ?? ""}
-          alt="product image"
-          width={300}
-          height={350}
-        />
-      </figure>
+      <Image
+        src={product.assets.at(0)?.preview ?? ""}
+        alt="product image"
+        width={300}
+        height={350}
+      />
+
       <div className="items-start py-2">
         <StaticStarRating
           starAmount={Math.floor(Math.random() * (5 - 1 + 1)) + 1}

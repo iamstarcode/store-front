@@ -5,8 +5,8 @@ import { Swiper, SwiperSlide } from "swiper/react"
 
 import { client } from "@/lib/client"
 import { GetProductsNewArrivalsQuery, getSdkWithHooks } from "@/hooks/use-query"
+import ProductCard from "@/components/product-card"
 
-import ProductCard from "../product-card"
 import "swiper/css"
 import "swiper/css/free-mode"
 import "swiper/css/pagination"
@@ -31,11 +31,7 @@ function NewArrivals() {
   const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
   return (
     <>
-      <Swiper
-        direction={"horizontal"}
-        slidesPerView={"auto"}
-        className="mySwiper"
-      >
+      <Swiper direction={"horizontal"} className="mySwiper hidden">
         <SwiperSlide>
           {data?.products.items.map(
             (item: GetProductsNewArrivalsQuery["products"]["items"][0]) => (
@@ -44,7 +40,7 @@ function NewArrivals() {
           )}
         </SwiperSlide>
       </Swiper>
-      <div className="">
+      <div className="hidden">
         <h2 className="py-4 text-2xl font-bold">New Arrivals</h2>
         <div className="w-full  overflow-x-scroll">
           <div className="inline-flex w-max snap-x space-x-4">
@@ -61,7 +57,7 @@ function NewArrivals() {
         <Carousel
           align="start"
           withIndicators
-          slideSize={{ base: "100%", sm: "40%", md: "20%" }}
+          slideSize={{ base: "100%", sm: "40%", md: "22.5%" }}
           height={200}
         >
           {data?.products.items.map(
@@ -73,16 +69,17 @@ function NewArrivals() {
           )}
         </Carousel>
       </MantineProvider>
-
-      <div className="embla" ref={emblaRef}>
-        <div className="embla__container">
-          {data?.products.items.map(
-            (item: GetProductsNewArrivalsQuery["products"]["items"][0]) => (
-              <div className="embla__slide wid">
-                <ProductCard product={item} />
-              </div>
-            )
-          )}
+      <div>
+        <div className="embla" ref={emblaRef}>
+          <div className="embla__container space-x-3">
+            {data?.products.items.map(
+              (item: GetProductsNewArrivalsQuery["products"]["items"][0]) => (
+                <div className="w-[12.5%] shrink-0 grow-0">
+                  <ProductCard product={item} />
+                </div>
+              )
+            )}
+          </div>
         </div>
       </div>
     </>
