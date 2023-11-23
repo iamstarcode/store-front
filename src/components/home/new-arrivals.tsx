@@ -31,16 +31,23 @@ function NewArrivals() {
   const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
   return (
     <>
-      <Swiper direction={"horizontal"} className="mySwiper hidden">
-        <SwiperSlide>
+      <div>
+        <h2 className="mt-5 text-lg font-medium md:text-2xl">New Arrivals</h2>
+        <Swiper slidesPerView={7.3} className="bg-transparent">
           {data?.products.items.map(
             (item: GetProductsNewArrivalsQuery["products"]["items"][0]) => (
-              <ProductCard product={item} />
+              <SwiperSlide
+                style={{ backgroundColor: "transparent" }}
+                className="pr-2"
+              >
+                <ProductCard product={data?.products.items[4]} />
+              </SwiperSlide>
             )
           )}
-        </SwiperSlide>
-      </Swiper>
-      <div className="hidden">
+        </Swiper>
+      </div>
+
+      {/*   <div className="hidden">
         <h2 className="py-4 text-2xl font-bold">New Arrivals</h2>
         <div className="w-full  overflow-x-scroll">
           <div className="inline-flex w-max snap-x space-x-4">
@@ -71,7 +78,7 @@ function NewArrivals() {
       </MantineProvider>
       <div>
         <div className="embla" ref={emblaRef}>
-          <div className="embla__container space-x-3">
+          <div className="backface-hidden ml-calc(1rem * -1) flex touch-pan-y space-x-3">
             {data?.products.items.map(
               (item: GetProductsNewArrivalsQuery["products"]["items"][0]) => (
                 <div className="w-[12.5%] shrink-0 grow-0">
@@ -81,7 +88,7 @@ function NewArrivals() {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   )
 }

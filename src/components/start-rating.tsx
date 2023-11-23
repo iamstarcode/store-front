@@ -21,7 +21,6 @@ const StarRating = () => {
 }
 
 export const StaticStarRating = ({ starAmount }: { starAmount: number }) => {
-  console.log(starAmount)
   const stars = []
   for (let i = 1; i <= 5; i++) {
     if (i <= starAmount) {
@@ -29,17 +28,27 @@ export const StaticStarRating = ({ starAmount }: { starAmount: number }) => {
         <input
           type="radio"
           name="rating-1"
-          className="mask mask-star bg-yellow-400"
+          className="mask mask-star bg-yellow-400  focus:transform-none"
+          checked={true}
           key={i}
         />
       )
     } else {
       stars.push(
-        <input type="radio" name="rating-1" className="mask mask-star" />
+        <input
+          type="radio"
+          name="rating-1"
+          checked={false}
+          className="mask mask-star focus:translate-y-0"
+        />
       )
     }
   }
 
-  return <div className="rating">{stars}</div>
+  return (
+    <div className="rating rating-sm transform-none transition-none">
+      {stars}
+    </div>
+  )
 }
 export default StarRating
