@@ -3,6 +3,7 @@ import Link from "next/link"
 import { siteConfig } from "@/config/site"
 import { Button, buttonVariants } from "@/components/ui/"
 import Category from "@/components/home/category"
+import Collection from "@/components/home/collections"
 import HomeSlide from "@/components/home/home-slide"
 import NewArrivals from "@/components/home/new-arrivals"
 
@@ -23,6 +24,7 @@ export default function IndexPage() {
 
       {/* New Arivals */}
       <NewArrivals />
+      <Collection />
       <div className="flex max-w-[980px] flex-col items-start gap-2">
         <h1 className="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
           Beautifully designed components <br className="hidden sm:inline" />

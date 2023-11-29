@@ -1,3 +1,4 @@
+//import { ClientError } from 'graphql-request/dist/types';
 import { ClientError, GraphQLClient } from "graphql-request"
 import { GraphQLClientRequestHeaders } from "graphql-request/build/cjs/types"
 import gql from "graphql-tag"
@@ -3447,48 +3448,50 @@ export type GetProductsNewArrivalsQuery = {
 }
 
 export const ProductsFragmentFragmentDoc = gql`
-    fragment ProductsFragment on Product {
-  id
-  name
-  slug
-  variants {
-    price
+  fragment ProductsFragment on Product {
+    id
+    name
+    slug
+    variants {
+      price
+    }
+    assets {
+      source
+      preview
+    }
   }
-  assets {
-    source
-    preview
-  }
-}
-    `
+`
 export const GetCollectionsRootDocument = gql`
-    query GetCollectionsRoot {
-  collections {
-    items {
-      id
-      name
-      slug
+  query GetCollectionsRoot {
+    collections {
+      items {
+        id
+        name
+        slug
+      }
     }
   }
-}
-    `
+`
 export const GetProductsFragmentDocument = gql`
-    query GetProductsFragment($take: Int, $skip: Int) {
-  products(options: {take: $take, skip: $skip}) {
-    items {
-      ...ProductsFragment
+  query GetProductsFragment($take: Int, $skip: Int) {
+    products(options: { take: $take, skip: $skip }) {
+      items {
+        ...ProductsFragment
+      }
     }
   }
-}
-    ${ProductsFragmentFragmentDoc}`
+  ${ProductsFragmentFragmentDoc}
+`
 export const GetProductsNewArrivalsDocument = gql`
-    query GetProductsNewArrivals {
-  products(options: {sort: {createdAt: DESC}, take: 10}) {
-    items {
-      ...ProductsFragment
+  query GetProductsNewArrivals {
+    products(options: { sort: { createdAt: DESC }, take: 10 }) {
+      items {
+        ...ProductsFragment
+      }
     }
   }
-}
-    ${ProductsFragmentFragmentDoc}`
+  ${ProductsFragmentFragmentDoc}
+`
 
 export type SdkFunctionWrapper = <T>(
   action: (requestHeaders?: Record<string, string>) => Promise<T>,
