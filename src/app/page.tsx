@@ -16,7 +16,7 @@ export default function IndexPage() {
         </div>
 
         <div className="relative flex w-full flex-wrap lg:w-1/2">
-          <div className=" menu absolute -left-2 z-10  h-full w-full bg-base-200 !text-xs xl:menu-horizontal lg:min-w-max">
+          {/*  <div className=" menu absolute -left-2 z-10  h-full w-full bg-base-200 !text-xs xl:menu-horizontal lg:min-w-max">
             <div className="flex w-full">
               <div className="flex-1">
                 <div className="mb-4 bg-gray-200 p-4">Column 1, Row 1</div>
@@ -35,7 +35,7 @@ export default function IndexPage() {
                 <div className="mb-4 bg-green-200 p-4">Column 3, Row 2</div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="w-full lg:flex-1">
             <HomeSlide />
           </div>

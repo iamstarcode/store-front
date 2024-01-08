@@ -14,10 +14,18 @@ import Image from "next/image"
 // import required modules
 import { Autoplay, Navigation, Pagination } from "swiper/modules"
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+
 export default function HomeSlide() {
   return (
     <>
-      <Swiper
+      {/*  <Swiper
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
@@ -63,7 +71,23 @@ export default function HomeSlide() {
             alt="slider-1"
           />
         </SwiperSlide>
-      </Swiper>
+      </Swiper> */}
+
+      <Carousel>
+        <CarouselContent>
+          <CarouselItem>
+            <Image
+              className="h-[340px] w-full"
+              src="/img/slider-1.jpg"
+              alt="slider-1"
+              width={400}
+              height={200}
+            />
+          </CarouselItem>
+          <CarouselItem>...</CarouselItem>
+          <CarouselItem>...</CarouselItem>
+        </CarouselContent>
+      </Carousel>
     </>
   )
 }
