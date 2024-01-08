@@ -1,25 +1,13 @@
 "use client"
 
 import React from "react"
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react"
-
-// Import Swiper styles
-import "swiper/css"
-import "swiper/css/pagination"
-import "swiper/css/navigation"
-import "@/styles/swiper.css"
-
 import Image from "next/image"
-// import required modules
-import { Autoplay, Navigation, Pagination } from "swiper/modules"
+import Autoplay from "embla-carousel-autoplay"
 
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel"
 
 export default function HomeSlide() {
@@ -73,7 +61,7 @@ export default function HomeSlide() {
         </SwiperSlide>
       </Swiper> */}
 
-      <Carousel>
+      <Carousel opts={{ loop: true }} plugins={[Autoplay({ delay: 5000 })]}>
         <CarouselContent>
           <CarouselItem>
             <Image
@@ -84,8 +72,25 @@ export default function HomeSlide() {
               height={200}
             />
           </CarouselItem>
-          <CarouselItem>...</CarouselItem>
-          <CarouselItem>...</CarouselItem>
+          <CarouselItem>
+            <Image
+              className="h-[340px] w-full"
+              src="/img/slider-2.jpg"
+              alt="slider-1"
+              width={400}
+              height={200}
+            />
+          </CarouselItem>
+
+          <CarouselItem>
+            <Image
+              className="h-[340px] w-full"
+              src="/img/slider-1.jpg"
+              alt="slider-1"
+              width={400}
+              height={200}
+            />
+          </CarouselItem>
         </CarouselContent>
       </Carousel>
     </>
