@@ -1,7 +1,9 @@
 import "@/styles/globals.css"
+
 import { Metadata } from "next"
 import SWR from "@/providers/swr"
-import { GeistMono, GeistSans } from "geist/font"
+import { GeistMono } from "geist/font/mono"
+import { GeistSans } from "geist/font/sans"
 
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
