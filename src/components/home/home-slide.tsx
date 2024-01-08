@@ -9,6 +9,7 @@ import "swiper/css"
 import "swiper/css/pagination"
 import "swiper/css/navigation"
 import "@/styles/swiper.css"
+
 import Image from "next/image"
 // import required modules
 import { Autoplay, Navigation, Pagination } from "swiper/modules"
