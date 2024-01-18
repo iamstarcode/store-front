@@ -1,20 +1,13 @@
 "use client"
 
-import { useViewportSize } from "@mantine/hooks"
-import useEmblaCarousel, { EmblaOptionsType } from "embla-carousel-react"
-
 import { client } from "@/lib/client"
 import { GetProductsNewArrivalsQuery, getSdkWithHooks } from "@/hooks/use-query"
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel"
 import ProductCard from "@/components/product-card"
-
-import "@mantine/carousel/styles.css"
 
 function NewArrivals() {
   const sdk = getSdkWithHooks(client())

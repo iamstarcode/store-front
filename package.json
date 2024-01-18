@@ -17,8 +17,6 @@
   "dependencies": {
     "@apollo/client": "^3.8.8",
     "@graphql-tools/executor-http": "^1.0.5",
-    "@mantine/carousel": "^7.3.2",
-    "@mantine/core": "^7.3.2",
     "@mantine/hooks": "^7.3.2",
     "@mantine/nprogress": "^7.3.2",
     "@radix-ui/react-navigation-menu": "^1.1.4",
